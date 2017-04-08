@@ -157,7 +157,7 @@ module.exports = function (app) {
 		newGame.save(function (err, doc) {
 			if (err) throw err;
 			var idArray = [{ _id: req.body.player1_id }, { _id: req.body.player2_id }];
-			User.update(idArray, { $push: { currentGames: newGame } }, { multi: true }, function (err, doc) {
+			User.update(idArray, { $push: { games: newGame } }, { multi: true }, function (err, doc) {
 				if (err) throw err;
 
 				res.json({});
@@ -165,6 +165,12 @@ module.exports = function (app) {
 		});
 
 	});
+
+/*
+	
+*/
+
+
 
 	// app.put('/addwin', function (req, res) {
 	// 	// console.log(req.body);
