@@ -18,7 +18,7 @@ export default class App extends Component {
 		return (
 			<Navigator
 				initialRoute={{ component: this.state.component }}
-				configureScene={() => { return Navigator.SceneConfigs.FloatFromRight; }}
+				configureScene={() => { return Navigator.SceneConfigs.FadeAndroid; }}
 				renderScene={(route, navigator) => {
 					if (route.component) {
 						return React.createElement(route.component, { navigator });

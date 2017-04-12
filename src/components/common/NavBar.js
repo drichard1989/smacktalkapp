@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, Image, AppRegistry } from 'react-native'
-import { CardSection, Card } from './../common';
+import { Text, Image, AppRegistry, TouchableHighlight } from 'react-native'
+import { CardSection, Card, NavSection } from './../common';
 import HomePage from './../../screens/gamescreens/homepage';
 import ProfilePage from './../../screens/gamescreens/profilepage';
 import NewGamePage from './../../screens/gamescreens/newgamepage';
@@ -40,24 +40,32 @@ export default class NavBar extends Component {
 	render() {
 		return (
 
-			<CardSection>
-				<Image
-					source={require('./../../images/Home.png')}
-					onPress={this.HomeGo}
-				/>
-				<Image
-					source={require('./../../images/Profile.png')}
-					onPress={this.ProfileGo}
-				/>
-				<Image
-					source={require('./../../images/NewGame.png')}
-					onPress={this.NewGameGo}
-				/>
-				<Image
-					source={require('./../../images/Settings.png')}
-					onPress={this.SettingsGo}
-				/>
-			</CardSection>
+			<NavSection>
+				<TouchableHighlight onPress={this.HomeGo}>
+					<Image
+						source={require('./../../images/Home.png')}
+						
+					/>
+				</TouchableHighlight>
+				<TouchableHighlight onPress={this.ProfileGo}>
+					<Image
+						source={require('./../../images/Profile.png')}
+						
+					/>
+				</TouchableHighlight>
+				<TouchableHighlight onPress={this.NewGameGo}>
+					<Image
+						source={require('./../../images/NewGame.png')}
+						
+					/>
+				</TouchableHighlight>
+				<TouchableHighlight onPress={this.SettingsGo}>
+					<Image
+						source={require('./../../images/Settings.png')}
+						
+					/>
+				</TouchableHighlight>
+			</NavSection>
 		)
 	}
 }

@@ -16,7 +16,7 @@ export default class FBLogin extends Component {
 	handleFacebookLogin = () => {
 		LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends'])
 			.then(
-			  (result) =>  {
+			(result) => {
 				if (result.isCancelled) {
 					console.log('Login cancelled')
 				} else {
@@ -34,7 +34,7 @@ export default class FBLogin extends Component {
 	render() {
 		return (
 			<Button
-				style={styles.FBButtonStyle}	
+				style={styles.FBButtonStyle}
 				onPress={this.handleFacebookLogin}
 				title="Login with Facebook"
 			/>
