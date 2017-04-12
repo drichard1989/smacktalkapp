@@ -1,0 +1,21 @@
+import React, { Component } from 'react';
+import { Text, View, AppRegistry } from 'react-native';
+import { Button, Card, CardSection, Header } from './../../components/common';
+import NavBar from './../../components/common/NavBar';
+
+export default class Settingspage extends Component { 
+
+	render() {
+		return (
+			<View>
+				<Header>Settings!</Header>	
+				<NavBar navigator={this.props.navigator}/>
+			</View>
+		);
+	}
+}
+
+AppRegistry.registerComponent('Settingspage', () => Settingspage);
+
+
+
