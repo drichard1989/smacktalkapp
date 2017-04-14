@@ -1,7 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
-import { ActivityIndicator, View, Navigator } from 'react-native';
-import { Button, Header } from './components/common';
+import { ActivityIndicator, Navigator } from 'react-native';
 import Login from './screens/authentication/login';
 
 export default class App extends Component {

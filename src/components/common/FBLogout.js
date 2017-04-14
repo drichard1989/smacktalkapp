@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, AppRegistry } from 'react-native';
+import { TouchableOpacity, AppRegistry, Text} from 'react-native';
 import Login from './../../screens/authentication/login';
 
 import { LoginManager } from 'react-native-fbsdk';
@@ -19,20 +19,32 @@ export default class FBLogout extends Component {
 
 	render() {
 		return (
-			<Button
+			<TouchableOpacity
 				style={styles.FBButtonStyle}
-				onPress={this.handleFacebookLogout}
-				title="Logout of Facebook"
-			/>
+				onPress={this.handleFacebookLogout}>
+				<Text style={styles.textStyle}>Logout of Facebook</Text>
+			</TouchableOpacity>
 		)
 	}
 };
 
 const styles = {
 	FBButtonStyle: {
-		marginLeft: 5,
-		marginRight: 5,
+		padding: 15,
+		marginLeft: 30,
+		marginRight:30,
+		backgroundColor: '#ec7c31',
+		borderRadius: 10,
+		borderWidth: 3,
 		borderColor: '#ffffff'
+
+	},
+	textStyle: {
+		textAlign: 'center',
+		fontSize: 17,
+		color: '#ffffff',
+		fontWeight: '700'
+
 	}
 };
 

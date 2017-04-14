@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, AppRegistry } from 'react-native';
 
 const CardSection = (props) => {
 	return (
@@ -22,4 +22,4 @@ const style = {
 	}
 };
 
-export { CardSection };
+export default CardSection;

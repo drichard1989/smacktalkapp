@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, AppRegistry } from 'react-native';
 
 const Button = ({ onPress, children }) => {
 	const { buttonStyle, textStyle } = styles;
@@ -33,4 +33,4 @@ const styles = {
 	}
 };
 
-export { Button };
+export default Button;

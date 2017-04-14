@@ -1,19 +1,21 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, AppRegistry, Image } from 'react-native';
 
 const Header = ({ props, children }) => {
-	const { textStyle, viewStyle } = styles;
+	const { headerContainer, logoContainer, logo } = styles;
 
 	return (
-		<View style={viewStyle}>
-			<Text style={textStyle}>{children}</Text>
+		<View style={headerContainer}>
+			<View style={logoContainer}>
+				<Image style={logo} source={require('./../../images/smacktalkLogo.png')}/>
+			</View>
 		</View>
 	);
 };
 
 const styles = {
-	viewStyle: {
-		backgroundColor: 'yellow',
+	headerContainer: {
+		backgroundColor: '#146a99',
 		justifyContent: 'center',
 		alignItems: 'center',
 		height: 60,
@@ -24,10 +26,17 @@ const styles = {
 		elevation: 2,
 		position: 'relative'
 	},
-	textStyle: {
-		fontSize: 20,
-		color: 'black'
-	}
+
+	logoContainer: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		paddingBottom: 10
+	},
+	logo: {
+		width: 100, 
+		height: 50,
+
+	}		
 };
 
-export { Header };
+export default Header;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, AppRegistry } from 'react-native';
 
 const Card = (props) => {
 	return (
@@ -27,4 +27,4 @@ const styles = {
 	}
 };
 
-export { Card };
+export default Card;

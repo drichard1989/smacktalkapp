@@ -3,9 +3,14 @@ import {
 	AppRegistry,
 	StyleSheet,
 	Text,
-	View
+	View,
+	ScrollView,
+	Image
 } from 'react-native';
-import { Button, Card, CardSection, Header } from './../../components/common';
+import Header from './../../components/common/Header';
+import CardSection from './../../components/common/CardSection';
+import Card from './../../components/common/Card';
+import Button from './../../components/common/Button';
 import Homepage from './../gamescreens/homepage';
 import FBLogin from './../../components/common/FBLogin';
 
@@ -15,31 +20,44 @@ export default class Login extends Component {
 
 	render() {
 		return (
-			<View>
-				<Header>Smacktalk!</Header>
-				<FBLogin navigator={this.props.navigator} />
-			</View>
+			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
+				<View style={styles.container}>
+					<View style={styles.logoContainer}>
+						<Image style={styles.logo} source={require('./../../images/smacktalkLogo.png')}/>
+					</View>	
+
+				</View>	
+				<View style={styles.buttonContainer}>
+					<FBLogin navigator={this.props.navigator}/>
+				</View>
+			</Image>
 		);
 	}
 }
 
-const styles = StyleSheet.create({
+const styles = {
 	container: {
+		flex: 1
+	},
+	bgImage: {
 		flex: 1,
-		justifyContent: 'center',
+		width: null,
+		height: null
+	},
+	logoContainer: {
 		alignItems: 'center',
-		backgroundColor: '#F5FCFF',
+		flexGrow: 1,
+		justifyContent: 'center'
 	},
-	welcome: {
-		fontSize: 20,
-		textAlign: 'center',
-		margin: 10,
+	logo: {
+		width: 350,
+		height: 200
 	},
-	instructions: {
-		textAlign: 'center',
-		color: '#333333',
-		marginBottom: 5,
-	},
-});
+	buttonContainer: {
+		marginBottom: 100
+	}
+};
+
+
 
 AppRegistry.registerComponent('Login', () => Login);

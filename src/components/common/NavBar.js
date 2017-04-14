@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Image, AppRegistry, TouchableHighlight } from 'react-native'
-import { CardSection, Card, NavSection } from './../common';
+import { Text, Image, AppRegistry, TouchableHighlight, View, Navigator } from 'react-native'
 import HomePage from './../../screens/gamescreens/homepage';
 import ProfilePage from './../../screens/gamescreens/profilepage';
 import NewGamePage from './../../screens/gamescreens/newgamepage';
@@ -39,35 +38,47 @@ export default class NavBar extends Component {
 
 	render() {
 		return (
-
-			<NavSection>
+			<View style={styles.containerStyle}>
 				<TouchableHighlight onPress={this.HomeGo}>
 					<Image
-						source={require('./../../images/Home.png')}
+						style={styles.navImage} source={require('./../../images/Home.png')}
 						
 					/>
 				</TouchableHighlight>
 				<TouchableHighlight onPress={this.ProfileGo}>
 					<Image
-						source={require('./../../images/Profile.png')}
+						style={styles.navImage} source={require('./../../images/Profile.png')}
 						
 					/>
 				</TouchableHighlight>
 				<TouchableHighlight onPress={this.NewGameGo}>
 					<Image
-						source={require('./../../images/NewGame.png')}
+						style={styles.navImage} source={require('./../../images/NewGame.png')}
 						
 					/>
 				</TouchableHighlight>
 				<TouchableHighlight onPress={this.SettingsGo}>
 					<Image
-						source={require('./../../images/Settings.png')}
+						style={styles.navImage} source={require('./../../images/Settings.png')}
 						
 					/>
 				</TouchableHighlight>
-			</NavSection>
+			</View>
 		)
 	}
 }
+const styles = {
+	containerStyle: {
+		justifyContent: 'space-between',
+		flexDirection: 'row',
+		backgroundColor: '#ffffff',
+		paddingLeft: 20,
+		paddingRight: 20
+	},
+	navImage: {
+		width: 50,
+		height: 50
+	}
+};
 
 AppRegistry.registerComponent('NavBar', () => NavBar);
