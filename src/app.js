@@ -2,6 +2,11 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, Navigator } from 'react-native';
 import Login from './screens/authentication/login';
+const FBSDK = require('react-native-fbsdk');
+const {
+  GraphRequest,
+  GraphRequestManager,
+} = FBSDK;
 
 export default class App extends Component {
 	constructor(props) {

@@ -13,6 +13,7 @@ export default class Profilepage extends Component {
 						<Header/>
 					</View>
 					<View style={styles.bodyContainer}>
+						
 					</View>
 					<View style={styles.navContainer}>
 						<NavBar navigator={this.props.navigator} />

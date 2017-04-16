@@ -14,7 +14,7 @@ export default class Settingspage extends Component {
 						<Header/>
 					</View>
 					<View style={styles.bodyContainer}>
-						<FBLogout/>	
+						<FBLogout navigator={this.props.navigator}/>	
 					</View>
 					<View style={styles.navContainer}>
 						<NavBar navigator={this.props.navigator} />
