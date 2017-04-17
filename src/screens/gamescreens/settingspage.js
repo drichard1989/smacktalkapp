@@ -2,19 +2,41 @@ import React, { Component } from 'react';
 import { Text, View, AppRegistry, Image } from 'react-native';
 import Header from './../../components/common/Header';
 import NavBar from './../../components/common/NavBar';
-import FBLogout from './../../components/common/FBLogout';
+import CardSection from './../../components/common/CardSection';
+import Button from './../../components/common/Button';
+import Login from './../../screens/authentication/login';
+import { LoginManager } from 'react-native-fbsdk';
 
-export default class Settingspage extends Component { 
 
+export default class Settingspage extends Component {
+
+	handleFacebookLogout = () => {
+		LoginManager.logOut()
+		this.props.navigator.push({
+			component: Login
+		});
+	}
 	render() {
 		return (
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
 				<View style={styles.container}>
 					<View style={styles.headerContainer} >
-						<Header/>
+						<Header />
 					</View>
 					<View style={styles.bodyContainer}>
-						<FBLogout navigator={this.props.navigator}/>	
+						<CardSection>
+							<Button
+								navigator={this.props.navigator}
+								title="Logout of Facebook"
+								onPress={this.handleFacebookLogout}/>
+						</CardSection>
+						<CardSection>
+							<Button
+								title="Delete Account"
+
+							/>
+						</CardSection>
+
 					</View>
 					<View style={styles.navContainer}>
 						<NavBar navigator={this.props.navigator} />

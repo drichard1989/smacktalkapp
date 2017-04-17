@@ -10,9 +10,8 @@ import {
 import Header from './../../components/common/Header';
 import CardSection from './../../components/common/CardSection';
 import Card from './../../components/common/Card';
-import Button from './../../components/common/Button';
 import Homepage from './../gamescreens/homepage';
-import FBLogin from './../../components/common/FBLogin';
+import Button from './../../components/common/Button';
 import { LoginManager } from 'react-native-fbsdk';
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -83,7 +82,10 @@ export default class Login extends Component {
 
 				</View>
 				<View style={styles.buttonContainer}>
-					<FBLogin navigator={this.props.navigator} onPress={this.handleFacebookLogin} />
+					<Button
+						navigator={this.props.navigator}
+						onPress={this.handleFacebookLogin}
+						title="Login With Facebook"/>
 				</View>
 			</Image>
 		);

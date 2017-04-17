@@ -17,8 +17,7 @@ export default class Homepage extends Component {
 	constructor() {
 		super();
 		this.state = {
-			name: '',
-			pic: ''
+			name: ''
 		}
 	}
 
@@ -26,14 +25,13 @@ export default class Homepage extends Component {
 		if (error) {
 			alert('Error fetching data: ' + error.toString());
 		} else {
-			this.setState({ name: result.name, pic: result.picture.data.url });
-			console.log(this.state.pic);
+			this.setState({ name: result.first_name });
 		}
 	}
 
 	componentWillMount() {
 		const infoRequest = new GraphRequest(
-			'/me?fields=name,picture.type(large)',
+			'/me?fields=first_name,picture.type(large)',
 			null,
 			this._responseInfoCallback
 		);
@@ -46,7 +44,9 @@ export default class Homepage extends Component {
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
 				<View style={styles.container}>
 					<View style={styles.headerContainer} >
-						<Header />
+						<Header>
+							<Image style={styles.logo} source={require('./../../images/smacktalkLogo.png')} />
+						</Header>
 					</View>
 					<View style={styles.bodyContainer}>
 						<Text>{this.state.name}</Text>
@@ -77,6 +77,10 @@ const styles = {
 		height: 200,
 		width: 200,
 		margin: 20
+	},
+	logo: {
+		width: 100,
+		height: 50
 	}
 }
 
