@@ -30,12 +30,28 @@ export default class Login extends Component {
 
 		this.state = {
 			first: '',
-			last: '', 
+			last: '',
 			loaded: false
 		}
 		// set initial state
 
-	}	
+	}
+
+	goToHomePage(accessToken) {
+		this.props.navigator.push({
+			component: Homepage
+		});
+	}
+
+	componentWillMount() {
+		console.log(AccessToken)
+		AccessToken.getCurrentAccessToken().then(
+			(data) => {
+				if (data)
+					this.goToHomePage();
+			}
+		)
+	}
 	handleFacebookLogin = () => {
 		LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends', 'user_photos'])
 			.then(
@@ -47,43 +63,9 @@ export default class Login extends Component {
 					console.log('Login success with permissions: ' + result.grantedPermissions.toString())
 					AccessToken.getCurrentAccessToken().then(
 						(data) => {
-							let accessToken = data.accessToken
-							// alert(accessToken.toString())
-
-							const responseInfoCallback = (error, result) => {
-								if (error) {
-									console.log(error)
-									alert('Error fetching data: ' + error.toString());
-								} else {
-									console.log(result.first_name)
-									this.setState({ first: result.first_name })
-									this.setState({ last: result.last_name })
-									console.log(this.state.first)
-									console.log(this.state.last)
-									// alert('Success fetching data: ' + result.toString());
-								}
-							}
-
-							const infoRequest = new GraphRequest(
-								'/me',
-								{
-									accessToken: accessToken,
-									parameters: {
-										fields: {
-											string: 'email, name, first_name, middle_name, last_name'
-										}
-									}
-								},
-								responseInfoCallback
-							);
-							new GraphRequestManager().addRequest(infoRequest).start()
-
-
+							this.goToHomePage();
 						}
 					)
-					this.props.navigator.push({
-						component: Homepage
-					});
 				}
 			},
 			function (error) {
@@ -101,7 +83,7 @@ export default class Login extends Component {
 
 				</View>
 				<View style={styles.buttonContainer}>
-					<FBLogin navigator={this.props.navigator} onPress={this.handleFacebookLogin}/>
+					<FBLogin navigator={this.props.navigator} onPress={this.handleFacebookLogin} />
 				</View>
 			</Image>
 		);

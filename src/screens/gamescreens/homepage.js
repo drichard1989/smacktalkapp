@@ -5,18 +5,52 @@ import Header from './../../components/common/Header';
 import Button from './../../components/common/Button';
 import CardSection from './../../components/common/CardSection';
 import Card from './../../components/common/Card';
-
+const FBSDK = require('react-native-fbsdk');
+const {
+	LoginButton,
+	GraphRequest,
+	GraphRequestManager,
+} = FBSDK;
 
 export default class Homepage extends Component {
+
+	constructor() {
+		super();
+		this.state = {
+			name: '',
+			pic: ''
+		}
+	}
+
+	_responseInfoCallback = (error, result) => {
+		if (error) {
+			alert('Error fetching data: ' + error.toString());
+		} else {
+			this.setState({ name: result.name, pic: result.picture.data.url });
+			console.log(this.state.pic);
+		}
+	}
+
+	componentWillMount() {
+		const infoRequest = new GraphRequest(
+			'/me?fields=name,picture.type(large)',
+			null,
+			this._responseInfoCallback
+		);
+		new GraphRequestManager().addRequest(infoRequest).start();
+	}
+
 
 	render() {
 		return (
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
 				<View style={styles.container}>
 					<View style={styles.headerContainer} >
-						<Header/>
+						<Header />
 					</View>
 					<View style={styles.bodyContainer}>
+						<Text>{this.state.name}</Text>
+						<Image source={{ uri: this.state.pic }} style={styles.image}></Image>
 					</View>
 					<View style={styles.navContainer}>
 						<NavBar navigator={this.props.navigator} />
@@ -39,8 +73,10 @@ const styles = {
 	bodyContainer: {
 		flexGrow: 1
 	},
-	navContainer: {
-
+	image: {
+		height: 200,
+		width: 200,
+		margin: 20
 	}
 }
 
