@@ -47,10 +47,12 @@ export default class Homepage extends Component {
 						<Header>
 							<Image style={styles.logo} source={require('./../../images/smacktalkLogo.png')} />
 						</Header>
+						<Header>
+							<Text style={styles.headerText}>Hello {this.state.name}!</Text>
+						</Header>
 					</View>
 					<View style={styles.bodyContainer}>
-						<Text>{this.state.name}</Text>
-						<Image source={{ uri: this.state.pic }} style={styles.image}></Image>
+
 					</View>
 					<View style={styles.navContainer}>
 						<NavBar navigator={this.props.navigator} />
@@ -81,6 +83,10 @@ const styles = {
 	logo: {
 		width: 100,
 		height: 50
+	},
+	headerText: {
+		color: '#ffffff',
+		fontSize: 20
 	}
 }
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Text, View, AppRegistry, Image } from 'react-native';
 
-const Header = ({ props, children }) => {
+const Header = (props) => {
 	const { headerContainer, logoContainer, logo } = styles;
 
 	return (
 		<View style={headerContainer}>
 			<View style={logoContainer}>
-				<Image style={logo} source={require('./../../images/smacktalkLogo.png')}/>
+				{props.children}
 			</View>
 		</View>
 	);

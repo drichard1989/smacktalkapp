@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, AppRegistry, Image } from 'react-native';
 import Header from './../../components/common/Header';
 import NavBar from './../../components/common/NavBar';
+import Card from './../../components/common/Card';
+import CardSection from './../../components/common/CardSection';
 const FBSDK = require('react-native-fbsdk');
 const {
 	LoginButton,
@@ -46,12 +48,24 @@ export default class Profilepage extends Component {
 						<Header />
 					</View>
 					<View style={styles.bodyContainer}>
-						<Text>{this.state.name}</Text>
-						<Image source={{ uri: this.state.pic }} style={styles.image}></Image>
+					<CardSection>
+						<View style={styles.thumbnailContainerStyle}>
+							<Image
+								style={styles.thumbnailStyle}
+								source={{ uri: this.state.pic }}
+							/>
+						</View>
+						<View style={styles.headerContentStyle}>
+							<Text style={styles.headerTextStyle}>{this.state.name}</Text>
+						</View>
+					</CardSection>
 					</View>
+
+
 					<View style={styles.navContainer}>
 						<NavBar navigator={this.props.navigator} />
 					</View>
+
 				</View>
 			</Image>
 		);
@@ -74,7 +88,24 @@ const styles = {
 		height: 200,
 		width: 200,
 		margin: 20
-	}
+	},
+	thumbnailStyle: {
+		height: 100,
+		width: 100
+	},
+	thumbnailContainerStyle: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginLeft: 10,
+		marginRight: 10
+	},
+	headerContentStyle: {
+		flexDirection: 'column',
+		justifyContent: 'space-around'
+	},
+	headerTextStyle: {
+		fontSize: 25
+	},
 }
 
 AppRegistry.registerComponent('Profilepage', () => Profilepage);

@@ -2,38 +2,24 @@ import React, { Component } from 'react';
 import { Text, View, AppRegistry, Image } from 'react-native';
 import Header from './../../components/common/Header';
 import NavBar from './../../components/common/NavBar';
+import NewGame from './../../screens/gamescreens/NewGame';
+import Button from './../../components/common/Button';
 const FBSDK = require('react-native-fbsdk');
 const {
 	GraphRequest,
 	GraphRequestManager,
 } = FBSDK;
 
-export default class Newgamepage extends Component { 
+export default class Newgamepage extends Component {
 
-	constructor() {
-		super();
-		this.state = {
-			people: []
-		}
-	}	
 
-	_responseInfoCallback = (error, result) => {
-		if (error) {
-			alert('Error fetching data: ' +
-				error.toString());
-		} else {
-			this.setState({ people: result.data })
-			console.log(this.state.people);
-		}
-	}
 
-	componentWillMount() {
-		const infoRequest = new GraphRequest(
-			'me/friends?fields=first_name,id,picture.width(400)',
-			null,
-			this._responseInfoCallback
-		);
-		new GraphRequestManager().addRequest(infoRequest).start();
+
+
+	goToNewGame = () => {
+		this.props.navigator.push({
+			component: NewGame
+		})
 	}
 
 
@@ -42,9 +28,13 @@ export default class Newgamepage extends Component {
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
 				<View style={styles.container}>
 					<View style={styles.headerContainer} >
-						<Header/>
+						<Header />
 					</View>
 					<View style={styles.bodyContainer}>
+						<Button
+							navigator={this.props.navigator}
+							title="Create New Game"
+							onPress={this.goToNewGame} />
 					</View>
 					<View style={styles.navContainer}>
 						<NavBar navigator={this.props.navigator} />

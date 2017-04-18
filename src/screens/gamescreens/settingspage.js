@@ -24,18 +24,19 @@ export default class Settingspage extends Component {
 						<Header />
 					</View>
 					<View style={styles.bodyContainer}>
-						<CardSection>
+						<View style={styles.buttonContainer}>
 							<Button
 								navigator={this.props.navigator}
+
 								title="Logout of Facebook"
-								onPress={this.handleFacebookLogout}/>
-						</CardSection>
-						<CardSection>
+								onPress={this.handleFacebookLogout} />
+						</View>
+						<View style={styles.buttonContainer}>
 							<Button
 								title="Delete Account"
 
 							/>
-						</CardSection>
+						</View>
 
 					</View>
 					<View style={styles.navContainer}>
@@ -59,8 +60,8 @@ const styles = {
 	bodyContainer: {
 		flexGrow: 1
 	},
-	navContainer: {
-
+	buttonContainer: {
+		margin: 10
 	}
 }
 
