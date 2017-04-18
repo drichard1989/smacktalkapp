@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, AppRegistry, Image } from 'react-native';
-import NavBar from './../../components/common/NavBar';
+import { Text, View, AppRegistry, Image, TouchableHighlight } from 'react-native';
 import Header from './../../components/common/Header';
 import Button from './../../components/common/Button';
 import CardSection from './../../components/common/CardSection';
 import Card from './../../components/common/Card';
+import ProfilePage from './../../screens/gamescreens/profilepage';
+import NewGamePage from './../../screens/gamescreens/newgamepage';
+import SettingsPage from './../../screens/gamescreens/settingspage';
+
 const FBSDK = require('react-native-fbsdk');
 const {
 	LoginButton,
@@ -19,6 +22,36 @@ export default class Homepage extends Component {
 		this.state = {
 			name: ''
 		}
+	}
+
+	handlePress = () => {
+		this.props.onPress();
+	}
+
+
+
+	HomeGo = () => {
+		this.props.navigator.push({
+			component: HomePage
+		});
+	}
+
+	ProfileGo = () => {
+		this.props.navigator.push({
+			component: ProfilePage
+		});
+	}
+
+	NewGameGo = () => {
+		this.props.navigator.push({
+			component: NewGamePage
+		});
+	}
+
+	SettingsGo = () => {
+		this.props.navigator.push({
+			component: SettingsPage
+		});
 	}
 
 	_responseInfoCallback = (error, result) => {
@@ -54,8 +87,31 @@ export default class Homepage extends Component {
 					<View style={styles.bodyContainer}>
 
 					</View>
-					<View style={styles.navContainer}>
-						<NavBar navigator={this.props.navigator} />
+					<View style={styles.containerStyle} navigator={this.props.navigator}>
+						<TouchableHighlight>
+							<Image
+								style={styles.navImage} source={require('./../../images/HomeOrange.png')}
+
+							/>
+						</TouchableHighlight>
+						<TouchableHighlight onPress={this.ProfileGo}>
+							<Image
+								style={styles.navImage} source={require('./../../images/Profile.png')}
+
+							/>
+						</TouchableHighlight>
+						<TouchableHighlight onPress={this.NewGameGo}>
+							<Image
+								style={styles.navImage} source={require('./../../images/NewGame.png')}
+
+							/>
+						</TouchableHighlight>
+						<TouchableHighlight onPress={this.SettingsGo}>
+							<Image
+								style={styles.navImage} source={require('./../../images/Settings.png')}
+
+							/>
+						</TouchableHighlight>
 					</View>
 				</View>
 			</Image>
@@ -81,12 +137,23 @@ const styles = {
 		margin: 20
 	},
 	logo: {
-		width: 100,
-		height: 50
+		width: 130,
+		height: 60
 	},
 	headerText: {
 		color: '#ffffff',
 		fontSize: 20
+	},
+	containerStyle: {
+		justifyContent: 'space-between',
+		flexDirection: 'row',
+		backgroundColor: '#ffffff',
+		paddingLeft: 20,
+		paddingRight: 20
+	},
+	navImage: {
+		width: 50,
+		height: 50
 	}
 }
 

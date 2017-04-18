@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, AppRegistry, Image } from 'react-native';
+import { Text, View, AppRegistry, Image, TouchableHighlight } from 'react-native';
 import Header from './../../components/common/Header';
 import NavBar from './../../components/common/NavBar';
 import Card from './../../components/common/Card';
 import CardSection from './../../components/common/CardSection';
+import HomePage from './../../screens/gamescreens/homepage';
+import NewGamePage from './../../screens/gamescreens/newgamepage';
+import SettingsPage from './../../screens/gamescreens/settingspage';
+
 const FBSDK = require('react-native-fbsdk');
 const {
 	LoginButton,
@@ -19,6 +23,36 @@ export default class Profilepage extends Component {
 			name: '',
 			pic: ''
 		}
+	}
+
+	handlePress = () => {
+		this.props.onPress();
+	}
+
+
+
+	HomeGo = () => {
+		this.props.navigator.push({
+			component: HomePage
+		});
+	}
+
+	ProfileGo = () => {
+		this.props.navigator.push({
+			component: ProfilePage
+		});
+	}
+
+	NewGameGo = () => {
+		this.props.navigator.push({
+			component: NewGamePage
+		});
+	}
+
+	SettingsGo = () => {
+		this.props.navigator.push({
+			component: SettingsPage
+		});
 	}
 
 	_responseInfoCallback = (error, result) => {
@@ -45,25 +79,50 @@ export default class Profilepage extends Component {
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
 				<View style={styles.container}>
 					<View style={styles.headerContainer} >
-						<Header />
+						<Header>
+							<Image style={styles.logo} source={require('./../../images/smacktalkLogo.png')} />
+						</Header>
 					</View>
 					<View style={styles.bodyContainer}>
-					<CardSection>
-						<View style={styles.thumbnailContainerStyle}>
-							<Image
-								style={styles.thumbnailStyle}
-								source={{ uri: this.state.pic }}
-							/>
-						</View>
-						<View style={styles.headerContentStyle}>
-							<Text style={styles.headerTextStyle}>{this.state.name}</Text>
-						</View>
-					</CardSection>
+						<CardSection>
+							<View style={styles.thumbnailContainerStyle}>
+								<Image
+									style={styles.thumbnailStyle}
+									source={{ uri: this.state.pic }}
+								/>
+							</View>
+							<View style={styles.headerContentStyle}>
+								<Text style={styles.headerTextStyle}>{this.state.name}</Text>
+							</View>
+						</CardSection>
 					</View>
 
 
-					<View style={styles.navContainer}>
-						<NavBar navigator={this.props.navigator} />
+					<View style={styles.containerStyle} navigator={this.props.navigator}>
+						<TouchableHighlight onPress={this.HomeGo}>
+							<Image
+								style={styles.navImage} source={require('./../../images/Home.png')}
+
+							/>
+						</TouchableHighlight>
+						<TouchableHighlight>
+							<Image
+								style={styles.navImage} source={require('./../../images/ProfileOrange.png')}
+
+							/>
+						</TouchableHighlight>
+						<TouchableHighlight onPress={this.NewGameGo}>
+							<Image
+								style={styles.navImage} source={require('./../../images/NewGame.png')}
+
+							/>
+						</TouchableHighlight>
+						<TouchableHighlight onPress={this.SettingsGo}>
+							<Image
+								style={styles.navImage} source={require('./../../images/Settings.png')}
+
+							/>
+						</TouchableHighlight>
 					</View>
 
 				</View>
@@ -80,6 +139,10 @@ const styles = {
 		flex: 1,
 		width: null,
 		height: null
+	},
+	logo: {
+		width: 130,
+		height: 60
 	},
 	bodyContainer: {
 		flexGrow: 1
@@ -106,6 +169,17 @@ const styles = {
 	headerTextStyle: {
 		fontSize: 25
 	},
+	containerStyle: {
+		justifyContent: 'space-between',
+		flexDirection: 'row',
+		backgroundColor: '#ffffff',
+		paddingLeft: 20,
+		paddingRight: 20
+	},
+	navImage: {
+		width: 50,
+		height: 50
+	}
 }
 
 AppRegistry.registerComponent('Profilepage', () => Profilepage);
