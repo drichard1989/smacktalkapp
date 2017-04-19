@@ -5,29 +5,39 @@ import CardSection from './CardSection';
 
 const PersonCard = ({ person }) => {
 	return (
-		<Card>
-			<CardSection>
-				<View>
-					<Image
-						source={{ uri: person.picture.data.url }}
-						style={styles.imageStyle}
+		<View style={styles.cardContainer}>
+			<View>
+				<Image
+					source={{ uri: person.picture.data.url }}
+					style={styles.imageStyle}
 
-					/>
-				</View>
-				<Text>{person.name}</Text>
-				<View>
-
-				</View>
-			</CardSection>
-		</Card>
+				/>
+			</View>
+			
+			<View>
+				<Text style={styles.names}>{person.first_name}</Text>
+			</View>
+		</View>
 	)
 };
 
 const styles = {
 	imageStyle: {
 		height: 100,
-		flex: 1,
 		width: 100
+	},
+	cardContainer: {
+		padding: 5,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		width: 110,
+		margin: 10,
+		borderRadius: 5,
+		borderColor: '#ec7c31',
+		borderWidth: 3
+	},
+	names: {
+		alignItems: 'center'
 	}
 }
 

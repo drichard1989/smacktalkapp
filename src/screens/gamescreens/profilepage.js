@@ -7,6 +7,7 @@ import CardSection from './../../components/common/CardSection';
 import HomePage from './../../screens/gamescreens/homepage';
 import NewGamePage from './../../screens/gamescreens/newgamepage';
 import SettingsPage from './../../screens/gamescreens/settingspage';
+import ProfileList from './../../components/common/ProfileList';
 
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -17,8 +18,8 @@ const {
 
 export default class Profilepage extends Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			name: '',
 			pic: ''
@@ -55,23 +56,7 @@ export default class Profilepage extends Component {
 		});
 	}
 
-	_responseInfoCallback = (error, result) => {
-		if (error) {
-			alert('Error fetching data: ' + error.toString());
-		} else {
-			this.setState({ name: result.name, pic: result.picture.data.url });
-			console.log(this.state.pic);
-		}
-	}
 
-	componentWillMount() {
-		const infoRequest = new GraphRequest(
-			'/me?fields=name,picture.type(large)',
-			null,
-			this._responseInfoCallback
-		);
-		new GraphRequestManager().addRequest(infoRequest).start();
-	}
 
 
 	render() {
@@ -84,18 +69,9 @@ export default class Profilepage extends Component {
 						</Header>
 					</View>
 					<View style={styles.bodyContainer}>
-						<CardSection>
-							<View style={styles.thumbnailContainerStyle}>
-								<Image
-									style={styles.thumbnailStyle}
-									source={{ uri: this.state.pic }}
-								/>
-							</View>
-							<View style={styles.headerContentStyle}>
-								<Text style={styles.headerTextStyle}>{this.state.name}</Text>
-							</View>
-						</CardSection>
+						<ProfileList />
 					</View>
+
 
 
 					<View style={styles.containerStyle} navigator={this.props.navigator}>
@@ -152,23 +128,7 @@ const styles = {
 		width: 200,
 		margin: 20
 	},
-	thumbnailStyle: {
-		height: 100,
-		width: 100
-	},
-	thumbnailContainerStyle: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginLeft: 10,
-		marginRight: 10
-	},
-	headerContentStyle: {
-		flexDirection: 'column',
-		justifyContent: 'space-around'
-	},
-	headerTextStyle: {
-		fontSize: 25
-	},
+
 	containerStyle: {
 		justifyContent: 'space-between',
 		flexDirection: 'row',

@@ -25,7 +25,7 @@ export default class PersonList extends Component {
 
 	componentWillMount() {
 		const infoRequest = new GraphRequest(
-			'me/friends?fields=name,id,picture.width(400)',
+			'me/friends?fields=first_name,id,picture.width(400)',
 			null,
 			this._responseInfoCallback
 		);
@@ -34,9 +34,10 @@ export default class PersonList extends Component {
 
 	renderPersons() {
 		return this.state.persons.map(person =>
-			<PersonCard key={person.name} person={person} />
+			<PersonCard key={person.first_name} person={person} />
 		);
 	}
+	
 	render() {
 		return (
 			<ScrollView>
