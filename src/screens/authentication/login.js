@@ -13,6 +13,7 @@ import Card from './../../components/common/Card';
 import Homepage from './../gamescreens/homepage';
 import Button from './../../components/common/Button';
 import { LoginManager } from 'react-native-fbsdk';
+import axios from 'axios';
 const FBSDK = require('react-native-fbsdk');
 const {
   GraphRequest,
@@ -28,22 +29,94 @@ export default class Login extends Component {
 		super(props);
 
 		this.state = {
-			first: '',
-			last: '',
-			loaded: false
+			user_info: {},
+			friends_list: []
 		}
 		// set initial state
 
 	}
 
+	_updateUserDB = () => {
+		// console.log("update user");
+		// console.log(this.state.friends_list);
+		axios({
+			method: 'put',
+			url: 'https://safe-coast-99118.herokuapp.com/updateUserInfo',
+			data: {
+				user_info: this.state.user_info,
+				friends_list: this.state.friends_list
+			}
+		}).then(function (response) {
+			console.log(response.data);
+		})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+
 	goToHomePage(accessToken) {
+
+		// let resultsObject = {
+		// 	attachments: undefined,
+		// 	comments: undefined,
+		// 	likes: undefined
+		// }
+		const infoRequest = new GraphRequest(
+			'/me?fields=name,picture.type(large)',
+			null,
+			// this._responseInfoCallback
+			(error, response) => {
+				if (error) {
+					console.log(error);
+				}
+				this.state.user_info = response.data;
+			}
+		);
+		const infoRequest2 = new GraphRequest(
+			'me/friends?fields=name,id,picture.width(400)',
+			null,
+			// this._responseInfoCallback
+			(error, response) => {
+				if (error) {
+					console.log(error);
+				}
+				this.state.friends_list = response.data;
+			}
+		);
+		// const batchRequest = new GraphR
+		new GraphRequestManager().addRequest(infoRequest).addRequest(infoRequest2) .addBatchCallback(() => this._updateUserDB()).start();
+		// new GraphRequestManager().addRequest(infoRequest2).start();
+		console.log(1);
+
+		
 		this.props.navigator.push({
 			component: Homepage
 		});
 	}
 
+	_responseInfoCallback = (error, result) => {
+		if (error) {
+			alert('Error fetching data: ' + error.toString());
+		} else {
+			this.setState({ user_info: result });
+			console.log(result);
+		}
+	}
+
+	_responseInfoCallback2 = (error, result) => {
+		if (error) {
+			alert('Error fetching data: ' + error.toString());
+		} else {
+			console.log(2);
+			this.setState({ friends_list: result.data })
+			// console.log(this.state.friends_list)
+		}
+	}
+
+
+
 	componentWillMount() {
-		console.log(AccessToken)
+		// console.log(AccessToken)
 		AccessToken.getCurrentAccessToken().then(
 			(data) => {
 				if (data)
@@ -59,7 +132,7 @@ export default class Login extends Component {
 				if (result.isCancelled) {
 					console.log('Login cancelled')
 				} else {
-					console.log('Login success with permissions: ' + result.grantedPermissions.toString())
+					// console.log('Login success with permissions: ' + result.grantedPermissions.toString())
 					AccessToken.getCurrentAccessToken().then(
 						(data) => {
 							this.goToHomePage();
@@ -85,7 +158,7 @@ export default class Login extends Component {
 					<Button
 						navigator={this.props.navigator}
 						onPress={this.handleFacebookLogin}
-						title="Login With Facebook"/>
+						title="Login With Facebook" />
 				</View>
 			</Image>
 		);

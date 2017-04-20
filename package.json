@@ -13,7 +13,6 @@
     "express": "^4.15.2",
     "fbgraph": "^1.4.1",
     "method-override": "^2.3.8",
-    "mongoose": "^4.9.3",
     "pug": "^2.0.0-beta11",
     "react": "16.0.0-alpha.6",
     "react-native": "0.43.2",

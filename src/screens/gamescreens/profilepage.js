@@ -25,40 +25,24 @@ export default class Profilepage extends Component {
 			pic: ''
 		}
 	}
-
 	handlePress = () => {
 		this.props.onPress();
 	}
-
-
-
 	HomeGo = () => {
 		this.props.navigator.push({
 			component: HomePage
 		});
 	}
-
-	ProfileGo = () => {
-		this.props.navigator.push({
-			component: ProfilePage
-		});
-	}
-
 	NewGameGo = () => {
 		this.props.navigator.push({
 			component: NewGamePage
 		});
 	}
-
 	SettingsGo = () => {
 		this.props.navigator.push({
 			component: SettingsPage
 		});
 	}
-
-
-
-
 	render() {
 		return (
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
@@ -71,36 +55,28 @@ export default class Profilepage extends Component {
 					<View style={styles.bodyContainer}>
 						<ProfileList />
 					</View>
-
-
-
 					<View style={styles.containerStyle} navigator={this.props.navigator}>
 						<TouchableHighlight onPress={this.HomeGo}>
 							<Image
 								style={styles.navImage} source={require('./../../images/Home.png')}
-
 							/>
 						</TouchableHighlight>
 						<TouchableHighlight>
 							<Image
 								style={styles.navImage} source={require('./../../images/ProfileOrange.png')}
-
 							/>
 						</TouchableHighlight>
 						<TouchableHighlight onPress={this.NewGameGo}>
 							<Image
 								style={styles.navImage} source={require('./../../images/NewGame.png')}
-
 							/>
 						</TouchableHighlight>
 						<TouchableHighlight onPress={this.SettingsGo}>
 							<Image
 								style={styles.navImage} source={require('./../../images/Settings.png')}
-
 							/>
 						</TouchableHighlight>
 					</View>
-
 				</View>
 			</Image>
 		);
@@ -128,7 +104,6 @@ const styles = {
 		width: 200,
 		margin: 20
 	},
-
 	containerStyle: {
 		justifyContent: 'space-between',
 		flexDirection: 'row',

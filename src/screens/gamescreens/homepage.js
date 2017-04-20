@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, AppRegistry, Image, TouchableHighlight } from 'react-native';
+import axios from 'axios';
 import Header from './../../components/common/Header';
 import Button from './../../components/common/Button';
 import CardSection from './../../components/common/CardSection';
@@ -17,23 +18,15 @@ const {
 
 export default class Homepage extends Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
-			name: ''
+			name: '',
+			ID: ''
 		}
 	}
-
 	handlePress = () => {
 		this.props.onPress();
-	}
-
-
-
-	HomeGo = () => {
-		this.props.navigator.push({
-			component: HomePage
-		});
 	}
 
 	ProfileGo = () => {
@@ -41,7 +34,6 @@ export default class Homepage extends Component {
 			component: ProfilePage
 		});
 	}
-
 	NewGameGo = () => {
 		this.props.navigator.push({
 			component: NewGamePage
@@ -58,7 +50,7 @@ export default class Homepage extends Component {
 		if (error) {
 			alert('Error fetching data: ' + error.toString());
 		} else {
-			this.setState({ name: result.first_name });
+			this.setState({ name: result.first_name, ID: result.id });
 		}
 	}
 
@@ -69,6 +61,20 @@ export default class Homepage extends Component {
 			this._responseInfoCallback
 		);
 		new GraphRequestManager().addRequest(infoRequest).start();
+	}
+
+	_getRequestOnDatabase = () => {
+		axios.get('https://safe-coast-99118.herokuapp.com/displayFriends', {
+			params: {
+				user_id: this.state.ID
+			}
+		})
+			.then(function (response) {
+				// console.log(response.data);
+			})
+			.catch(function (error) {
+				// console.log(error);
+			});
 	}
 
 
@@ -85,7 +91,9 @@ export default class Homepage extends Component {
 						</Header>
 					</View>
 					<View style={styles.bodyContainer}>
-
+						<Button
+							title="Get Request"
+							onPress={this._getRequestOnDatabase} />
 					</View>
 					<View style={styles.containerStyle} navigator={this.props.navigator}>
 						<TouchableHighlight>
