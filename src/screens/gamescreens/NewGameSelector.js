@@ -1,42 +1,32 @@
 import React, { Component } from 'react';
 import { Text, View, AppRegistry, Image, TouchableHighlight } from 'react-native';
 import Header from './../../components/common/Header';
-import CardSection from './../../components/common/CardSection';
+import NavBar from './../../components/common/NavBar';
 import Button from './../../components/common/Button';
-import Login from './../../screens/authentication/login';
-import { LoginManager } from 'react-native-fbsdk';
 import HomePage from './../../screens/gamescreens/homepage';
 import ProfilePage from './../../screens/gamescreens/profilepage';
 import NewGamePage from './../../screens/gamescreens/newgamepage';
+import SettingsPage from './../../screens/gamescreens/settingspage';
 
 
-export default class Settingspage extends Component {
 
-	handleFacebookLogout = () => {
-		LoginManager.logOut()
-		this.props.navigator.push({
-			component: Login
-		});
+export default class NewGameSelector extends Component {
+
+	constructor(props) {
+		super(props);
+
 	}
-
-	handlePress = () => {
-		this.props.onPress();
-	}
-
-
 
 	HomeGo = () => {
 		this.props.navigator.push({
 			component: HomePage
-		});
+		})
 	}
-
 	ProfileGo = () => {
 		this.props.navigator.push({
 			component: ProfilePage
 		});
 	}
-
 	NewGameGo = () => {
 		this.props.navigator.push({
 			component: NewGamePage
@@ -59,29 +49,17 @@ export default class Settingspage extends Component {
 							<Image style={styles.logo} source={require('./../../images/smacktalkLogo.png')} />
 						</Header>
 						<Header>
-							<Text style={styles.headerText}>Settings</Text>
+							<Text style={styles.headerText}>Select Game Type:</Text>
 						</Header>
 					</View>
 					<View style={styles.bodyContainer}>
-						<View style={styles.buttonContainer}>
-							<Button
-								navigator={this.props.navigator}
-
-								title="Logout of Facebook"
-								onPress={this.handleFacebookLogout} />
-						</View>
-						<View style={styles.buttonContainer}>
-							<Button
-								title="Delete Account"
-
-							/>
-						</View>
-
+						<Button
+							title="Play using Mutual Friends"/>
 					</View>
 					<View style={styles.containerStyle} navigator={this.props.navigator}>
-						<TouchableHighlight onPress={this.HomeGo}>
+						<TouchableHighlight>
 							<Image
-								style={styles.navImage} source={require('./../../images/Home.png')}
+								style={styles.navImage} source={require('./../../images/HomeOrange.png')}
 
 							/>
 						</TouchableHighlight>
@@ -97,9 +75,9 @@ export default class Settingspage extends Component {
 
 							/>
 						</TouchableHighlight>
-						<TouchableHighlight>
+						<TouchableHighlight onPress={this.SettingsGo}>
 							<Image
-								style={styles.navImage} source={require('./../../images/SettingsOrange.png')}
+								style={styles.navImage} source={require('./../../images/Settings.png')}
 
 							/>
 						</TouchableHighlight>
@@ -109,6 +87,7 @@ export default class Settingspage extends Component {
 		);
 	}
 }
+
 
 const styles = {
 	container: {
@@ -122,12 +101,18 @@ const styles = {
 	bodyContainer: {
 		flexGrow: 1
 	},
-	buttonContainer: {
-		margin: 10
+	image: {
+		height: 200,
+		width: 200,
+		margin: 20
 	},
 	logo: {
 		width: 130,
 		height: 60
+	},
+	headerText: {
+		color: '#ffffff',
+		fontSize: 20
 	},
 	containerStyle: {
 		justifyContent: 'space-between',
@@ -139,14 +124,7 @@ const styles = {
 	navImage: {
 		width: 50,
 		height: 50
-	},
-	headerText: {
-		color: '#ffffff',
-		fontSize: 20
-	},
+	}
 }
 
-AppRegistry.registerComponent('Settingspage', () => Settingspage);
-
-
-
+AppRegistry.registerComponent('NewGame', () => NewGame);

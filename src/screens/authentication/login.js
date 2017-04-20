@@ -39,6 +39,7 @@ export default class Login extends Component {
 	_updateUserDB = () => {
 		// console.log("update user");
 		// console.log(this.state.friends_list);
+		// console.log(this.state.user_info);
 		axios({
 			method: 'put',
 			url: 'https://safe-coast-99118.herokuapp.com/updateUserInfo',
@@ -47,7 +48,8 @@ export default class Login extends Component {
 				friends_list: this.state.friends_list
 			}
 		}).then(function (response) {
-			console.log(response.data);
+			// This is responsible for returning friends_list in the console. why?
+			console.log(response);
 		})
 			.catch(function (error) {
 				console.log(error);
@@ -69,7 +71,9 @@ export default class Login extends Component {
 				if (error) {
 					console.log(error);
 				}
-				this.state.user_info = response.data;
+				// console.log(response);
+				this.state.user_info = response;
+				// console.log(this.state.user_info);
 			}
 		);
 		const infoRequest2 = new GraphRequest(
@@ -84,9 +88,9 @@ export default class Login extends Component {
 			}
 		);
 		// const batchRequest = new GraphR
-		new GraphRequestManager().addRequest(infoRequest).addRequest(infoRequest2) .addBatchCallback(() => this._updateUserDB()).start();
+		new GraphRequestManager().addRequest(infoRequest).addRequest(infoRequest2).addBatchCallback(() => this._updateUserDB()).start();
 		// new GraphRequestManager().addRequest(infoRequest2).start();
-		console.log(1);
+		// console.log(1);
 
 		
 		this.props.navigator.push({
@@ -107,7 +111,7 @@ export default class Login extends Component {
 		if (error) {
 			alert('Error fetching data: ' + error.toString());
 		} else {
-			console.log(2);
+			// console.log(2);
 			this.setState({ friends_list: result.data })
 			// console.log(this.state.friends_list)
 		}

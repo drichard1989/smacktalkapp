@@ -51,6 +51,9 @@ export default class Profilepage extends Component {
 						<Header>
 							<Image style={styles.logo} source={require('./../../images/smacktalkLogo.png')} />
 						</Header>
+						<Header>
+							<Text style={styles.headerText}>Profile</Text>
+						</Header>
 					</View>
 					<View style={styles.bodyContainer}>
 						<ProfileList />
@@ -114,7 +117,11 @@ const styles = {
 	navImage: {
 		width: 50,
 		height: 50
-	}
+	},
+	headerText: {
+		color: '#ffffff',
+		fontSize: 20
+	},
 }
 
 AppRegistry.registerComponent('Profilepage', () => Profilepage);
