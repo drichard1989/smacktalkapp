@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, AppRegistry, Image } from 'react-native';
+import { Text, View, AppRegistry, Image, ScrollView } from 'react-native';
 import Header from './../../components/common/Header';
 import PersonList from './../../components/common/PersonList';
 
@@ -11,14 +11,21 @@ export default class NewGame extends Component {
 
 	}
 
-
-
-
 	render() {
 		return (
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
 				<View style={styles.container}>
-					<PersonList />
+					<View style={styles.headerContainer} >
+						<Header>
+							<Image style={styles.logo} source={require('./../../images/smacktalkLogo.png')} />
+						</Header>
+						<Header>
+							<Text style={styles.headerText}>Select Friend to Play:</Text>
+						</Header>
+					</View>
+					<ScrollView>
+						<PersonList />
+					</ScrollView>	
 				</View>
 			</Image>
 		)
@@ -38,8 +45,13 @@ const styles = {
 	bodyContainer: {
 		flexGrow: 1
 	},
-	navContainer: {
-
+	logo: {
+		width: 130,
+		height: 60
+	},
+	headerText: {
+		color: '#ffffff',
+		fontSize: 20
 	}
 }
 

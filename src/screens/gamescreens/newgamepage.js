@@ -4,20 +4,19 @@ import Header from './../../components/common/Header';
 import Button from './../../components/common/Button';
 import HomePage from './../../screens/gamescreens/homepage';
 import ProfilePage from './../../screens/gamescreens/profilepage';
-import NewGamePage from './../../screens/gamescreens/newgamepage';
+import NewGame from './../../screens/gamescreens/NewGame';
 import SettingsPage from './../../screens/gamescreens/settingspage';
+import PersonList from './../../components/common/PersonList';
+import NewGameSelector from './../../screens/gamescreens/NewGameSelector';
 import axios from 'axios';
 
 
 
-export default class NewGameSelector extends Component {
+export default class NewGamePage extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			name: '',
-			ID: '',
-			isLoading: true
 		}
 	}
 
@@ -33,7 +32,12 @@ export default class NewGameSelector extends Component {
 	}
 	NewGameGo = () => {
 		this.props.navigator.push({
-			component: NewGamePage
+			component: NewGame
+		});
+	}
+	NewGameSelectorGo = () => {
+		this.props.navigator.push({
+			component: NewGameSelector
 		});
 	}
 
@@ -44,45 +48,9 @@ export default class NewGameSelector extends Component {
 	}
 
 
-	_loadInitialState = async (cb) => {
-		try {
-			var value = await AsyncStorage.getItem("id");
-			if (value !== null) {
-				this.setState({ user_info: JSON.parse(result) });
-				cb();
-				// this._appendMessage('Recovered selection from disk: ' + value);
-			} else {
-				this._appendMessage('Initialized with no selection on disk.');
-			}
-		} catch (error) {
-			this._appendMessage('AsyncStorage error: ' + error.message);
-		}
-	}
-
-	componentWillMount() {
-		this._loadInitialState(function () {
-			axios.get('https://safe-coast-99118.herokuapp.com/displayFriends', {
-				params: {
-					user_id: this.state.user_info.id
-				}
-			})
-				.then(function (response) {
-					console.log(response.data);
-				})
-				.catch(function (error) {
-					// console.log(error);
-				});
-		});
-
-	}
-
-
-
 
 	render() {
-		if (this.state.isLoading) {
-			return <View><Text>Loading...</Text></View>;
-		}
+
 		return (
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
 				<View style={styles.container}>
@@ -96,7 +64,15 @@ export default class NewGameSelector extends Component {
 					</View>
 					<View style={styles.bodyContainer}>
 						<Button
-							title="Play using Mutual Friends" />
+							navigator={this.props.navigator}
+
+							title="Play with Friends Faces"
+							onPress={this.NewGameGo} />
+						<Button
+							navigator={this.props.navigator}
+
+							title="Play with Friends Faces"
+							onPress={this.NewGameSelectorGo} />
 					</View>
 					<View style={styles.containerStyle} navigator={this.props.navigator}>
 						<TouchableHighlight>
@@ -169,4 +145,4 @@ const styles = {
 	}
 }
 
-AppRegistry.registerComponent('NewGame', () => NewGame);
+AppRegistry.registerComponent('NewGamePage', () => NewGamePage);

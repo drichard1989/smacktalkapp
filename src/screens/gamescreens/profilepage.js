@@ -6,7 +6,6 @@ import CardSection from './../../components/common/CardSection';
 import HomePage from './../../screens/gamescreens/homepage';
 import NewGamePage from './../../screens/gamescreens/newgamepage';
 import SettingsPage from './../../screens/gamescreens/settingspage';
-import ProfileList from './../../components/common/ProfileList';
 import axios from 'axios';
 
 
@@ -16,7 +15,7 @@ export default class Profilepage extends Component {
 		super(props);
 		this.state = {
 			name: '',
-			ID: '',
+			id: 10212631339123286,
 			isLoading: true
 		}
 	}
@@ -39,18 +38,46 @@ export default class Profilepage extends Component {
 		});
 	}
 
+
+
+	async _loadInitialState() {
+		try {
+			var that = this;
+			const value = await AsyncStorage.getItem("id");
+			const userInfo = JSON.parse(value);
+			console.log("USER INFO");
+			// console.log(userInfo);
+			if (userInfo !== null) {
+				axios.get('https://safe-coast-99118.herokuapp.com/displayStats', {
+					params: {
+						user_id: userInfo.id
+					}
+				}).then(function (response) {
+					console.log("AXIOS CALL");
+					// console.log(response.data);
+					that.setState({ userStats: response.data[0] });
+					that.setState({ isLoading: false });
+				}).catch(function (error) {
+					console.log(error);
+				});
+			} else {
+				alert("Error")
+			}
+		} catch (error) {
+			alert("anothererror")
+		}
+	}
+
 	componentWillMount() {
-		AsyncStorage.getItem('id', (err, result) => {
-			// console.log(result);
-			this.setState({ user_info: JSON.parse(result), isLoading: false });
-			console.log(this.state.user_info.id);
-		})
+		this._loadInitialState().done();
 	}
 
 	render() {
-
-		if (this.state.isLoading) {
-			return <View><Text>Loading...</Text></View>;
+		console.log(this.state)
+		if (this.state.isLoading === true) {
+			return (
+				<Text>Loading</Text>
+			)
 		}
 		return (
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
@@ -66,13 +93,30 @@ export default class Profilepage extends Component {
 					<View style={styles.bodyContainer}>
 						<CardSection>
 							<View style={styles.thumbnailContainerStyle}>
-								<Image
-									style={styles.thumbnailStyle}
-									source={{ uri: this.state.user_info.picture.data.url }}
-								/>
+								<Image style={styles.thumbnailStyle} source={{uri: this.state.userStats.picture}}/>
 							</View>
 							<View style={styles.headerContentStyle}>
-								<Text style={styles.headerTextStyle}>{this.state.user_info.name}</Text>
+								<Text style={styles.headerTextStyle}>{this.state.userStats.name}</Text>
+							</View>
+						</CardSection>
+						<CardSection>
+							<View style={styles.headerContentStyle}>
+								<Text style={styles.headerTextStyle}>Total Wins:{this.state.userStats.wins}</Text>
+							</View>
+						</CardSection>
+						<CardSection>
+							<View style={styles.headerContentStyle}>
+								<Text style={styles.headerTextStyle}>Total Losses:{this.state.userStats.losses}</Text>
+							</View>
+						</CardSection>
+						<CardSection>
+							<View style={styles.headerContentStyle}>
+								<Text style={styles.headerTextStyle}>Current Win Streak: {this.state.userStats.currentStreak}</Text>
+							</View>
+						</CardSection>
+						<CardSection>
+							<View style={styles.headerContentStyle}>
+								<Text style={styles.headerTextStyle}>Longest Win Streak: {this.state.userStats.longestStreak}</Text>
 							</View>
 						</CardSection>
 					</View>

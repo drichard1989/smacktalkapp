@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { ScrollView, AppRegistry } from 'react-native';
+import { ScrollView, AppRegistry, Text } from 'react-native';
 import PersonCard from './PersonCard';
+import axios from 'axios';
 const FBSDK = require('react-native-fbsdk');
 const {
 	GraphRequest,
@@ -9,35 +10,38 @@ const {
 
 export default class PersonList extends Component {
 
-	state = {
-		persons: []
-	};
+	constructor(props) {
+		super(props);
 
-	_responseInfoCallback = (error, result) => {
-		if (error) {
-			alert('Error fetching data: ' +
-				error.toString());
-		} else {
-			this.setState({ persons: result.data })
-			console.log(this.state);
-		}
+		this.state = {
+			persons: [],
+			id: 10212631339123286,
+			isLoading: true
+		};
+		// set initial state
+
 	}
 
+
+
+
 	componentWillMount() {
-		const infoRequest = new GraphRequest(
-			'me/friends?fields=first_name,id,picture.width(400)',
-			null,
-			this._responseInfoCallback
-		);
-		new GraphRequestManager().addRequest(infoRequest).start();
+		axios.get('https://safe-coast-99118.herokuapp.com/displayFriends', {
+			params: {
+				user_id: this.state.id
+			}
+		}).then(response =>
+				this.setState({ persons: response.data }));
+		
+
 	}
 
 	renderPersons() {
 		return this.state.persons.map(person =>
-			<PersonCard key={person.first_name} person={person} />
+			<PersonCard key={person.name} person={person} />
 		);
 	}
-	
+
 	render() {
 		return (
 			<ScrollView>

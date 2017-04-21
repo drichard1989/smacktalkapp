@@ -52,6 +52,7 @@ export default class Login extends Component {
 		}).then(function (response) {
 			// This is responsible for returning friends_list in the console. why?
 			// console.log(response);
+			// console.log(response);
 		}).catch(function (error) {
 				// console.log(error);
 			});

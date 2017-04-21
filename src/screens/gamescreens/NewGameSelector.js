@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
-import { Text, View, AppRegistry, Image, TouchableHighlight } from 'react-native';
+import { Text, View, AppRegistry, Image, TouchableHighlight, AsyncStorage } from 'react-native';
 import Header from './../../components/common/Header';
 import Button from './../../components/common/Button';
 import HomePage from './../../screens/gamescreens/homepage';
 import ProfilePage from './../../screens/gamescreens/profilepage';
 import NewGamePage from './../../screens/gamescreens/newgamepage';
 import SettingsPage from './../../screens/gamescreens/settingspage';
+import axios from 'axios';
 
 
 
-export default class NewGameSelector extends Component {
+export default class NewGame extends Component {
 
 	constructor(props) {
 		super(props);
-
+		this.state = {
+			isLoading: true
+		}
 	}
 
 	HomeGo = () => {
@@ -39,7 +42,43 @@ export default class NewGameSelector extends Component {
 	}
 
 
+	async _loadInitialState()  {
+		try{
+			var that = this;
+			const value = await AsyncStorage.getItem("id");
+			const userInfo = JSON.parse(value);
+			console.log("USER INFO");
+		//	console.log(userInfo);
+			if( userInfo !== null){
+				axios.get('https://safe-coast-99118.herokuapp.com/displayFriends', {
+				params: {
+					user_id: userInfo.id
+				}}).then(function (response) {
+					console.log("AXIOS CALL");
+					// console.log(response.data);
+					that.setState({ userFriends: response.data });
+					that.setState({isLoading: false});
+				}).catch(function (error) {
+					console.log(error);
+				});
+				
+			}else{
+				this._appendMessage('Initialized with no selection on disk.');
+			}
+		}catch(error){
+			this._appendMessage('AsyncStorage error: ' + error.message);
+		}
+	}
+
+	componentWillMount() {
+		this._loadInitialState().done();
+	}
+
+
+
+
 	render() {
+console.log(this.state.userFriends)
 		return (
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
 				<View style={styles.container}>
@@ -48,17 +87,17 @@ export default class NewGameSelector extends Component {
 							<Image style={styles.logo} source={require('./../../images/smacktalkLogo.png')} />
 						</Header>
 						<Header>
-							<Text style={styles.headerText}>Select Game Type:</Text>
+							<Text style={styles.headerText}>Select New Game Type:</Text>
 						</Header>
 					</View>
 					<View style={styles.bodyContainer}>
 						<Button
-							title="Play using Mutual Friends"/>
+							title="Play using Mutual Friends" />
 					</View>
 					<View style={styles.containerStyle} navigator={this.props.navigator}>
 						<TouchableHighlight>
 							<Image
-								style={styles.navImage} source={require('./../../images/HomeOrange.png')}
+								style={styles.navImage} source={require('./../../images/Home.png')}
 
 							/>
 						</TouchableHighlight>
@@ -70,7 +109,7 @@ export default class NewGameSelector extends Component {
 						</TouchableHighlight>
 						<TouchableHighlight onPress={this.NewGameGo}>
 							<Image
-								style={styles.navImage} source={require('./../../images/NewGame.png')}
+								style={styles.navImage} source={require('./../../images/NewGameOrange.png')}
 
 							/>
 						</TouchableHighlight>

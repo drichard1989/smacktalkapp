@@ -7,15 +7,11 @@ const PersonCard = ({ person }) => {
 	return (
 		<View style={styles.cardContainer}>
 			<View>
-				<Image
-					source={{ uri: person.picture.data.url }}
-					style={styles.imageStyle}
-
-				/>
+				<Image style={styles.imageStyle} source={{ uri: person.picture }}/>
 			</View>
 			
 			<View>
-				<Text style={styles.names}>{person.first_name}</Text>
+				<Text style={styles.names}>{person.name}</Text>
 			</View>
 		</View>
 	)
