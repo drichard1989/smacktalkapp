@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, AppRegistry, Image, TouchableHighlight } from 'react-native';
 import Header from './../../components/common/Header';
-import NavBar from './../../components/common/NavBar';
 import Button from './../../components/common/Button';
 import HomePage from './../../screens/gamescreens/homepage';
 import ProfilePage from './../../screens/gamescreens/profilepage';

@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View, AppRegistry, Image, TouchableHighlight } from 'react-native';
+import { Text, View, AppRegistry, Image, TouchableHighlight, AsyncStorage } from 'react-native';
 import Header from './../../components/common/Header';
-import NavBar from './../../components/common/NavBar';
 import Card from './../../components/common/Card';
 import CardSection from './../../components/common/CardSection';
 import HomePage from './../../screens/gamescreens/homepage';
 import NewGamePage from './../../screens/gamescreens/newgamepage';
 import SettingsPage from './../../screens/gamescreens/settingspage';
 import ProfileList from './../../components/common/ProfileList';
+import axios from 'axios';
 
-const FBSDK = require('react-native-fbsdk');
-const {
-	LoginButton,
-	GraphRequest,
-	GraphRequestManager,
-} = FBSDK;
 
 export default class Profilepage extends Component {
 
@@ -22,7 +16,8 @@ export default class Profilepage extends Component {
 		super(props);
 		this.state = {
 			name: '',
-			pic: ''
+			ID: '',
+			isLoading: true
 		}
 	}
 	handlePress = () => {
@@ -43,7 +38,20 @@ export default class Profilepage extends Component {
 			component: SettingsPage
 		});
 	}
+
+	componentWillMount() {
+		AsyncStorage.getItem('id', (err, result) => {
+			// console.log(result);
+			this.setState({ user_info: JSON.parse(result), isLoading: false });
+			console.log(this.state.user_info.id);
+		})
+	}
+
 	render() {
+
+		if (this.state.isLoading) {
+			return <View><Text>Loading...</Text></View>;
+		}
 		return (
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
 				<View style={styles.container}>
@@ -56,7 +64,17 @@ export default class Profilepage extends Component {
 						</Header>
 					</View>
 					<View style={styles.bodyContainer}>
-						<ProfileList />
+						<CardSection>
+							<View style={styles.thumbnailContainerStyle}>
+								<Image
+									style={styles.thumbnailStyle}
+									source={{ uri: this.state.user_info.picture.data.url }}
+								/>
+							</View>
+							<View style={styles.headerContentStyle}>
+								<Text style={styles.headerTextStyle}>{this.state.user_info.name}</Text>
+							</View>
+						</CardSection>
 					</View>
 					<View style={styles.containerStyle} navigator={this.props.navigator}>
 						<TouchableHighlight onPress={this.HomeGo}>
@@ -122,6 +140,23 @@ const styles = {
 		color: '#ffffff',
 		fontSize: 20
 	},
+	thumbnailStyle: {
+		height: 100,
+		width: 100
+	},
+	thumbnailContainerStyle: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginLeft: 10,
+		marginRight: 10
+	},
+	headerContentStyle: {
+		flexDirection: 'column',
+		justifyContent: 'space-around'
+	},
+	headerTextStyle: {
+		fontSize: 25
+	}
 }
 
 AppRegistry.registerComponent('Profilepage', () => Profilepage);

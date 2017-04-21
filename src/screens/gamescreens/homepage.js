@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, AppRegistry, Image, TouchableHighlight } from 'react-native';
+import { Text, View, AppRegistry, Image, TouchableHighlight, AsyncStorage } from 'react-native';
 import axios from 'axios';
 import Header from './../../components/common/Header';
 import Button from './../../components/common/Button';
@@ -22,7 +22,8 @@ export default class Homepage extends Component {
 		super(props);
 		this.state = {
 			name: '',
-			ID: ''
+			ID: '',
+			isLoading: true
 		}
 	}
 	handlePress = () => {
@@ -46,39 +47,22 @@ export default class Homepage extends Component {
 		});
 	}
 
-	_responseInfoCallback = (error, result) => {
-		if (error) {
-			alert('Error fetching data: ' + error.toString());
-		} else {
-			this.setState({ name: result.first_name, ID: result.id });
-		}
-	}
+
 
 	componentWillMount() {
-		const infoRequest = new GraphRequest(
-			'/me?fields=first_name,picture.type(large)',
-			null,
-			this._responseInfoCallback
-		);
-		new GraphRequestManager().addRequest(infoRequest).start();
+		AsyncStorage.getItem('id', (err, result) => {
+			// console.log(result);
+			this.setState({ user_info: JSON.parse(result), isLoading: false });
+			console.log(this.state.user_info.id);
+		})
 	}
 
-	_getRequestOnDatabase = () => {
-		axios.get('https://safe-coast-99118.herokuapp.com/displayFriends', {
-			params: {
-				user_id: this.state.ID
-			}
-		})
-			.then(function (response) {
-				// console.log(response.data);
-			})
-			.catch(function (error) {
-				// console.log(error);
-			});
-	}
 
 
 	render() {
+		if (this.state.isLoading) {
+			return <View><Text>Loading...</Text></View>;
+		}
 		return (
 			<Image source={require('./../../images/appbackground.jpg')} style={styles.bgImage}>
 				<View style={styles.container}>
@@ -87,13 +71,11 @@ export default class Homepage extends Component {
 							<Image style={styles.logo} source={require('./../../images/smacktalkLogo.png')} />
 						</Header>
 						<Header>
-							<Text style={styles.headerText}>Hello {this.state.name}!</Text>
+							<Text style={styles.headerText}>Hello {this.state.user_info.name}!</Text>
 						</Header>
 					</View>
 					<View style={styles.bodyContainer}>
-						<Button
-							title="Get Request"
-							onPress={this._getRequestOnDatabase} />
+
 					</View>
 					<View style={styles.containerStyle} navigator={this.props.navigator}>
 						<TouchableHighlight>

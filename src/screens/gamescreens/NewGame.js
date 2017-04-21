@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, AppRegistry, Image } from 'react-native';
 import Header from './../../components/common/Header';
-import NavBar from './../../components/common/NavBar';
 import PersonList from './../../components/common/PersonList';
 
 
@@ -23,7 +22,7 @@ export default class NewGame extends Component {
 				</View>
 			</Image>
 		)
-	}	
+	}
 
 }
 

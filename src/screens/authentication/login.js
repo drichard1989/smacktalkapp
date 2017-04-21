@@ -5,8 +5,10 @@ import {
 	Text,
 	View,
 	ScrollView,
-	Image
+	Image,
+	AsyncStorage
 } from 'react-native';
+
 import Header from './../../components/common/Header';
 import CardSection from './../../components/common/CardSection';
 import Card from './../../components/common/Card';
@@ -49,31 +51,33 @@ export default class Login extends Component {
 			}
 		}).then(function (response) {
 			// This is responsible for returning friends_list in the console. why?
-			console.log(response);
-		})
-			.catch(function (error) {
-				console.log(error);
+			// console.log(response);
+		}).catch(function (error) {
+				// console.log(error);
 			});
 	}
 
 	goToHomePage(accessToken) {
 
-		// let resultsObject = {
-		// 	attachments: undefined,
-		// 	comments: undefined,
-		// 	likes: undefined
-		// }
 		const infoRequest = new GraphRequest(
 			'/me?fields=name,picture.type(large)',
 			null,
 			// this._responseInfoCallback
 			(error, response) => {
 				if (error) {
-					console.log(error);
+					// console.log(error);
 				}
+				// console.log("working");
 				// console.log(response);
 				this.state.user_info = response;
 				// console.log(this.state.user_info);
+				AsyncStorage.setItem('id', JSON.stringify(this.state.user_info)), () => {
+					AsyncStorage.mergeItem('id', JSON.stringify(this.state.user_info)), () => {
+						AsyncStroage.getItem('id', (err, result) => {
+							// console.log(result);
+						});
+					};
+				};
 			}
 		);
 		const infoRequest2 = new GraphRequest(
@@ -82,17 +86,17 @@ export default class Login extends Component {
 			// this._responseInfoCallback
 			(error, response) => {
 				if (error) {
-					console.log(error);
+					// console.log(error);
 				}
+
 				this.state.friends_list = response.data;
 			}
 		);
 		// const batchRequest = new GraphR
 		new GraphRequestManager().addRequest(infoRequest).addRequest(infoRequest2).addBatchCallback(() => this._updateUserDB()).start();
-		// new GraphRequestManager().addRequest(infoRequest2).start();
-		// console.log(1);
 
-		
+
+
 		this.props.navigator.push({
 			component: Homepage
 		});
@@ -103,7 +107,7 @@ export default class Login extends Component {
 			alert('Error fetching data: ' + error.toString());
 		} else {
 			this.setState({ user_info: result });
-			console.log(result);
+			// console.log(result);
 		}
 	}
 
