@@ -87,8 +87,9 @@ export default class Login extends Component {
 			// this._responseInfoCallback
 			(error, response) => {
 				if (error) {
-					// console.log(error);
+					
 				}
+				console.log(response);
 
 				this.state.friends_list = response.data;
 			}

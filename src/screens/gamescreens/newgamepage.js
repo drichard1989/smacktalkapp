@@ -63,16 +63,14 @@ export default class NewGamePage extends Component {
 						</Header>
 					</View>
 					<View style={styles.bodyContainer}>
-						<Button
-							navigator={this.props.navigator}
+						<View style={styles.buttonContainer}>
+							<Button
+								navigator={this.props.navigator}
 
-							title="Play with Friends Faces"
-							onPress={this.NewGameGo} />
-						<Button
-							navigator={this.props.navigator}
+								title="Play with Friends Faces"
+								onPress={this.NewGameGo} />
+						</View>
 
-							title="Play with Friends Faces"
-							onPress={this.NewGameSelectorGo} />
 					</View>
 					<View style={styles.containerStyle} navigator={this.props.navigator}>
 						<TouchableHighlight>
@@ -115,6 +113,9 @@ const styles = {
 		flex: 1,
 		width: null,
 		height: null
+	},
+	buttonContainer: {
+		margin: 10
 	},
 	bodyContainer: {
 		flexGrow: 1
